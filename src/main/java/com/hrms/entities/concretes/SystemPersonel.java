@@ -16,12 +16,12 @@ public class SystemPersonel {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "firstname")
+    @Column(name = "firstname",length = 25)
     private String firstName;
 
-    @Column(name = "lastname")
+    @Column(name = "lastname",length = 25)
     private String lastName;
 
-    @Column(name = "jobposition")
+    @Column(name = "jobposition",length = 50)
     private String position;
 }
