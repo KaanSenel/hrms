@@ -12,22 +12,21 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "jobSeekers")
+@Table(name = "job_seekers")
 public class JobSeeker extends User {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
-    private int userId;
+    @Column(name = "id")
+    private int id;
 
-    @Column(name = "firstName", length = 25,nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "lastName",length = 25,nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "identityNo",length = 11,nullable = false)
-    private long identityNo;
+    @Column(name = "identity_number")
+    private String identityNo;
 
-    @Column(name = "yearOfBirthday",nullable = false)
-    private short yearOfBirth;
+    @Column(name = "birth_year")
+    private int yearOfBirth;
 }

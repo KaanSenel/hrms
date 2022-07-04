@@ -17,4 +17,8 @@ public class Result {
         this(message);
         this.success=success;
     }
+
+    public Result(boolean success){
+        this.success=success;
+    }
 }

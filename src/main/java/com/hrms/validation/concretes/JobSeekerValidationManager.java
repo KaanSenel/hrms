@@ -1,57 +1,69 @@
 package com.hrms.validation.concretes;
 
-import com.hrms.business.abstracts.JobSeekerService;
 import com.hrms.core.results.ErrorResult;
 import com.hrms.core.results.Result;
 import com.hrms.core.results.SuccessResult;
+import com.hrms.dataAccess.abstracts.JobSeekerDao;
 import com.hrms.entities.concretes.JobSeeker;
-import com.hrms.validation.abstracts.JobSeekerValidationService;
+import com.hrms.mernis.ADAKPSPublicSoap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class JobSeekerValidationManager implements JobSeekerValidationService {
+@Service
+public class JobSeekerValidationManager {
 
-    private JobSeekerService jobSeekerService;
+    private JobSeekerDao jobSeekerService;
 
-    public JobSeekerValidationManager(JobSeekerService jobSeekerService) {
+
+    @Autowired
+    public JobSeekerValidationManager(JobSeekerDao jobSeekerService) {
         this.jobSeekerService = jobSeekerService;
     }
 
-    @Override
-    public Result check(JobSeeker jobSeeker) {
-        if(emailCheck(jobSeeker.getEmail()) &&
-               mernisCheck(String.valueOf(jobSeeker.getIdentityNo())) &&
-               identityCheck(jobSeeker.getIdentityNo())){
 
+    public Result check(JobSeeker jobSeeker) throws Exception{
+        if(!emailCheck(jobSeeker.getEmail())){
+            return new ErrorResult("Bu mail sistemde kayıtlıdır.");
         }
+        if(!mernisCheck(jobSeeker)){
+            return new ErrorResult("Böyle bir kullanıcı devlet kayıtlarında bulunmamaktadır.");
+        }
+        if(!identityCheck(jobSeeker.getIdentityNo())){
+            return new ErrorResult("Bu TC kimlik no sistemde kayıtlıdır.");
+        }
+        return new SuccessResult("Doğrulama gerçekleşti, sisteme kayıt başarıyla yapıldı.");
     }
 
-    @Override
-    public Result emailCheck(String email) {
-        List<String> emails=this.jobSeekerService.getAll().stream().map(JobSeeker::getEmail).toList();
+
+    public boolean emailCheck(String email) {
+        List<String> emails= this.jobSeekerService.findAll().stream().map(JobSeeker::getEmail).toList();
         for (String e : emails){
             if(e.equals(email)){
-                return new ErrorResult("Bu mail sistemde kayıtlı.");
+                return false;
             }
         }
-        return new SuccessResult();
+        return true;
     }
 
-    @Override
-    public Result mernisCheck(String identityNo) {
-        //mernisi bagla
-        return null;
+
+    public boolean mernisCheck(JobSeeker jobSeeker) throws Exception {
+        ADAKPSPublicSoap client=new ADAKPSPublicSoap();
+        return client.TCKimlikNoDogrula(Long.getLong(jobSeeker.getIdentityNo()),
+                jobSeeker.getFirstName(),
+                jobSeeker.getLastName(),
+                jobSeeker.getYearOfBirth());
     }
 
-    @Override
-    public Result identityCheck(long identityNo) {
-        List<Long> identities= this.jobSeekerService.getAll().stream().map(JobSeeker::getIdentityNo).toList();
-        for(long id : identities){
-            if(id==identityNo){
-                return new ErrorResult("Bu Tc kimlik numarası sistemde kayıtlı.");
+
+    public boolean identityCheck(String identityNo) {
+        List<String> identities= this.jobSeekerService.findAll().stream().map(JobSeeker::getIdentityNo).toList();
+        for(String id : identities){
+            if(id.equals(identityNo)){
+                return false;
             }
         }
-        return new SuccessResult();
+        return true;
     }
-
 }

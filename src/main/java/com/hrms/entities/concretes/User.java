@@ -20,12 +20,13 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "email",length = 50)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password",length = 50)
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "passwordAgain", length = 50)
+    @Column(name = "password", insertable = false, updatable = false)
     private String passwordAgain;
+
 }
