@@ -1,0 +1,168 @@
+BEGIN;
+
+
+CREATE TABLE IF NOT EXISTS public.users
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 CACHE 1 ),
+    email character varying(320) NOT NULL,
+    password character varying(30) NOT NULL,
+    CONSTRAINT pk_users PRIMARY KEY (id),
+    CONSTRAINT unique_email UNIQUE (email)
+);
+
+CREATE TABLE IF NOT EXISTS public.job_seekers
+(
+    id integer NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    identity_number character varying(11) NOT NULL,
+    birth_year integer NOT NULL,
+    CONSTRAINT pk_job_seekers PRIMARY KEY (id),
+    CONSTRAINT unique_identity_number UNIQUE (identity_number)
+);
+
+CREATE TABLE IF NOT EXISTS public.employers
+(
+    id integer NOT NULL,
+    company_name character varying(50) NOT NULL,
+    web_address character varying(50) NOT NULL,
+    phone_number character varying(15) NOT NULL,
+    CONSTRAINT pk_employer PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.workers
+(
+    id integer NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    CONSTRAINT pk_workers PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.verification_codes
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 CACHE 1 ),
+    code character varying(30) NOT NULL,
+    is_verified boolean,
+    verified_date date,
+    CONSTRAINT pk_verification_codes PRIMARY KEY (id),
+    CONSTRAINT unique_code UNIQUE (code)
+);
+
+CREATE TABLE IF NOT EXISTS public.verification_code_job_seekers
+(
+    id integer NOT NULL,
+    job_seekers_id integer NOT NULL,
+    CONSTRAINT pk_verification_codes_job_seekers PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.verification_code_employers
+(
+    id integer NOT NULL,
+    employer_id integer NOT NULL,
+    CONSTRAINT pk_verification_code_employers PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.workers_confirms
+(
+    id integer NOT NULL,
+    worker_id integer NOT NULL,
+    is_confirmed boolean,
+    confirm_date date,
+    CONSTRAINT pk_worker_confirms PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.worker_confirm_employee
+(
+    id integer NOT NULL,
+    employee_id integer NOT NULL,
+    CONSTRAINT pk_worker_confirm_employee PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.job_titles
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 CACHE 1 ),
+    title character varying(50) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT unique_title UNIQUE (title)
+);
+
+ALTER TABLE IF EXISTS public.job_seekers
+    ADD CONSTRAINT fk_job_seekers_users FOREIGN KEY (id)
+    REFERENCES public.users (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.employers
+    ADD CONSTRAINT fk_employers_users FOREIGN KEY (id)
+    REFERENCES public.users (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.workers
+    ADD CONSTRAINT fk_workers_users FOREIGN KEY (id)
+    REFERENCES public.users (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.verification_code_job_seekers
+    ADD CONSTRAINT fk_verification_codes_job_seekers_verification_codes FOREIGN KEY (id)
+    REFERENCES public.verification_codes (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.verification_code_job_seekers
+    ADD CONSTRAINT fk_verification_codes_job_seekers FOREIGN KEY (job_seekers_id)
+    REFERENCES public.job_seekers (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.verification_code_employers
+    ADD CONSTRAINT fk_verification_code_employers_verification_code FOREIGN KEY (id)
+    REFERENCES public.verification_codes (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.verification_code_employers
+    ADD CONSTRAINT fk_verification_code_employers FOREIGN KEY (employer_id)
+    REFERENCES public.employers (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.workers_confirms
+    ADD CONSTRAINT fk_worker_confirms_worker_id FOREIGN KEY (worker_id)
+    REFERENCES public.workers (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.worker_confirm_employee
+    ADD CONSTRAINT fk_worker_confirm_employee_worker_confirms FOREIGN KEY (id)
+    REFERENCES public.workers_confirms (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.worker_confirm_employee
+    ADD CONSTRAINT fk_worker_confirm_employee_id FOREIGN KEY (employee_id)
+    REFERENCES public.employers (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+END;
