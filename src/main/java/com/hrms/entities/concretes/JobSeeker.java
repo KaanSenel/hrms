@@ -13,20 +13,21 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "job_seekers")
+@PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 public class JobSeeker extends User {
 
-    @Column(name = "id")
-    private int id;
+   // @Column(name = "id")
+  //  private int id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name",nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name",nullable = false)
     private String lastName;
 
-    @Column(name = "identity_number")
-    private String identityNo;
+    @Column(name = "identity_number",nullable = false)
+    private String identityNumber;
 
-    @Column(name = "birth_year")
+    @Column(name = "birth_year",nullable = false)
     private int yearOfBirth;
 }

@@ -4,11 +4,7 @@ import com.hrms.business.abstracts.JobSeekerService;
 import com.hrms.core.results.DataResult;
 import com.hrms.core.results.Result;
 import com.hrms.entities.concretes.JobSeeker;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,6 +12,9 @@ import java.util.List;
 @RequestMapping("/jobseeker")
 public class JobSeekerController {
 
+    /*
+        null hatası nesne üretilemediği için mi acaba post işlemine yarın videolardan bi göz gezdir.
+     */
     private JobSeekerService jobSeekerService;
 
     public JobSeekerController(JobSeekerService jobSeekerService) {
@@ -28,8 +27,8 @@ public class JobSeekerController {
     }
 
     @PostMapping("/add")
-        public Result addJobSeeker(JobSeeker jobSeeker) throws Exception {
-           return this.jobSeekerService.addJobSeeker(jobSeeker);
-        }
+    public Result add(JobSeeker jobSeeker) throws Exception {
+        return this.jobSeekerService.addJobSeeker(jobSeeker);
+    }
 
 }

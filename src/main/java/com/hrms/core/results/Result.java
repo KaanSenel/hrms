@@ -1,10 +1,8 @@
 package com.hrms.core.results;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-
 public class Result {
     private boolean success;
     private String message;

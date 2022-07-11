@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 
 public interface JobSeekerDao extends JpaRepository<JobSeeker,Integer>{
 
+    JobSeeker findByEmail(String email);
+
+    JobSeeker findByIdentityNumber(String identityNumber);
 }

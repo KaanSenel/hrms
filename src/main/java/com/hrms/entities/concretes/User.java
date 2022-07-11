@@ -13,6 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
@@ -20,10 +21,10 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "email")
+    @Column(name = "email",nullable = false)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     private String password;
 
     @Column(name = "password", insertable = false, updatable = false)
