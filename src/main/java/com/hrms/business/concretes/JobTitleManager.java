@@ -8,6 +8,7 @@ import com.hrms.core.validation.JobTitleValidator;
 import com.hrms.dataAccess.abstracts.JobTitleDao;
 import com.hrms.entities.concretes.JobTitle;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class JobTitleManager implements JobTitleService {
     }
 
     @Override
-    public Result add(JobTitle jobTitle) {
+    public Result add(@RequestBody JobTitle jobTitle) {
         Result result=this.jobTitleValidator.jobTitleCheck(jobTitle);
         if(result.isSuccess()){
             this.jobTitleDao.save(jobTitle);
