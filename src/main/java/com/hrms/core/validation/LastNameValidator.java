@@ -1,4 +1,4 @@
-package com.hrms.core.results;
+package com.hrms.core.validation;
 
 
 public class LastNameValidator {

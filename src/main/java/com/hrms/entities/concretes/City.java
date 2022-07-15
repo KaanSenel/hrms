@@ -8,22 +8,22 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "job_titles")
-public class JobTitle {
+@Entity
+@Table(name = "cities")
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "city",length = 30,nullable = false)
+    private String city;
 
-    @OneToMany(mappedBy = "jobTitle")
+    @OneToMany(mappedBy = "city")
     private List<JobAdvertisement> jobAdvertisements;
 }

@@ -5,7 +5,9 @@ import com.hrms.core.results.Result;
 import com.hrms.core.results.SuccessResult;
 import com.hrms.dataAccess.abstracts.JobTitleDao;
 import com.hrms.entities.concretes.JobTitle;
+import org.springframework.stereotype.Service;
 
+@Service
 public class JobTitleValidator {
 
     private JobTitleDao jobTitleDao;

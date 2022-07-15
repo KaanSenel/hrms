@@ -1,15 +1,11 @@
 package com.hrms.core.validation;
 
 import com.hrms.core.results.ErrorResult;
-import com.hrms.core.results.LastNameValidator;
 import com.hrms.core.results.Result;
 import com.hrms.core.results.SuccessResult;
-import com.hrms.core.verification.EmailVerification;
-import com.hrms.core.verification.IdentityNumberAvailableVerification;
 import com.hrms.core.verification.MernisCheck;
 import com.hrms.dataAccess.abstracts.JobSeekerDao;
 import com.hrms.entities.concretes.JobSeeker;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.stereotype.Service;
 
 @Service

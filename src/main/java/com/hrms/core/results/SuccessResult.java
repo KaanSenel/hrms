@@ -3,7 +3,7 @@ package com.hrms.core.results;
 public class SuccessResult extends Result{
 
     public SuccessResult() {
-        super(true, "İş Arayan Kişi Başarıyla Kaydedildi");
+        super(true, "Kayıt işlemi başarılı.");
     }
     public SuccessResult(String message){
         super(true,message);
