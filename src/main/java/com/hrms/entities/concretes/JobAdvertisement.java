@@ -1,5 +1,7 @@
 package com.hrms.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +27,6 @@ public class JobAdvertisement {
 
     @Column(name = "description")
     private String description;
-
 
     @ManyToOne
     @JoinColumn(name = "city_id")

@@ -5,6 +5,7 @@ import com.hrms.core.results.DataResult;
 import com.hrms.core.results.Result;
 import com.hrms.core.results.SuccessDataResult;
 import com.hrms.entities.concretes.JobAdvertisement;
+import com.hrms.entities.dtos.JobAdvertisementDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/getAllActive")
-    public DataResult<List<JobAdvertisement>> getAllActive(){
+    public DataResult<List<JobAdvertisementDto>> getAllActive(){
          return this.jobAdvertisementService.getAllActive();
     }
 
@@ -37,13 +38,13 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/findByIsActiveOrderByListingDate")
-    DataResult<List<JobAdvertisement>> findByIsActiveOrderByListingDateAsc(boolean active){
+    DataResult<List<JobAdvertisementDto>> findByIsActiveOrderByListingDateAsc(boolean active){
         return new SuccessDataResult<>
                 (this.jobAdvertisementService.findByIsActiveOrderByListingDateAsc(active));
     }
 
     @GetMapping("/getByEmployeeCompanyNameAndIsActive")
-    DataResult<List<JobAdvertisement>> getByEmployee_CompanyNameAndIsActive(String companyName,boolean active){
+    DataResult<List<JobAdvertisementDto>> getByEmployee_CompanyNameAndIsActive(String companyName,boolean active){
         return new SuccessDataResult<>
                 (this.jobAdvertisementService.getByEmployee_CompanyNameAndIsActive(companyName, active));
     }

@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/title")
 public class JobTitleController {
 
-    private JobTitleService jobTitleService;
+    private final JobTitleService jobTitleService;
 
     public JobTitleController(JobTitleService jobTitleService) {
         this.jobTitleService = jobTitleService;

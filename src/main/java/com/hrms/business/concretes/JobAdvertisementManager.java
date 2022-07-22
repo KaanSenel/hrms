@@ -7,7 +7,7 @@ import com.hrms.core.results.SuccessDataResult;
 import com.hrms.core.validation.JobAdvertisementValidator;
 import com.hrms.dataAccess.abstracts.JobAdvertisementDao;
 import com.hrms.entities.concretes.JobAdvertisement;
-import org.springframework.data.domain.Sort;
+import com.hrms.entities.dtos.JobAdvertisementDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class JobAdvertisementManager implements JobAdvertisementService {
 
-    private JobAdvertisementDao jobAdvertisementDao;
+    private final JobAdvertisementDao jobAdvertisementDao;
     private final JobAdvertisementValidator jobAdvertisementValidator;
 
     @Autowired
@@ -34,7 +34,7 @@ public class JobAdvertisementManager implements JobAdvertisementService {
 
     //aktif iş ilanlarını getirir.
     @Override
-    public DataResult<List<JobAdvertisement>> getAllActive() {
+    public DataResult<List<JobAdvertisementDto>> getAllActive() {
         return new SuccessDataResult<>(this.jobAdvertisementDao.getByIsActive());
     }
 
@@ -49,12 +49,12 @@ public class JobAdvertisementManager implements JobAdvertisementService {
     }
 
     @Override
-    public List<JobAdvertisement> findByIsActiveOrderByListingDateAsc(boolean active) {
+    public List<JobAdvertisementDto> findByIsActiveOrderByListingDateAsc(boolean active) {
         return this.jobAdvertisementDao.findByIsActiveOrderByListingDateAsc(true);
     }
 
     @Override
-    public List<JobAdvertisement> getByEmployee_CompanyNameAndIsActive(String companyName, boolean active) {
+    public List<JobAdvertisementDto> getByEmployee_CompanyNameAndIsActive(String companyName, boolean active) {
         return this.jobAdvertisementDao.getByEmployee_CompanyNameAndIsActive(companyName, true);
     }
 }

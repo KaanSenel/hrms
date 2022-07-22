@@ -1,6 +1,7 @@
 package com.hrms.entities.concretes;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "employers")
 @PrimaryKeyJoinColumn(name = "id",referencedColumnName = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","job_advertisements"})
 public class Employee extends User{
 
    // @Column(name = "id")
@@ -30,6 +32,4 @@ public class Employee extends User{
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "employee")
-    private List<JobAdvertisement> jobAdvertisements;
 }
