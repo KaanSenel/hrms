@@ -1,15 +1,14 @@
 package com.hrms.entities.concretes;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -22,9 +21,14 @@ public class User {
     private int id;
 
     @Column(name = "email",nullable = false)
+    @Email
+    @NotNull
+    @NotEmpty
     private String email;
 
     @Column(name = "password",nullable = false)
+    @NotNull
+    @NotEmpty
     private String password;
 
     @Column(name = "password", insertable = false, updatable = false)

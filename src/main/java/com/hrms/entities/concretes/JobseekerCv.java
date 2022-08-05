@@ -1,49 +1,45 @@
 package com.hrms.entities.concretes;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "jobseeker_cv")
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler",/*"jobseekerUniversities","workExperiences","foreignLanguages"*/})
 public class JobseekerCv {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @GeneratedValue
+    @Column(name = "id")
+    private int id;
 
     @OneToOne()
     @JoinColumn(name = "jobseeker_id", nullable = false)
-    @JsonIgnore
     private JobSeeker jobseekerId;
 
-    /*
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "jobseeker_university_id", nullable = false)
-    private List<JobseekerUniversity> jobseekerUnivercityId;
+    @OneToMany(mappedBy = "jobseekerCv",cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<JobseekerUniversity> jobseekerUniversities;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "work_experience_id", nullable = false)
-    private List<WorkExperience> workExperienceId;
+    @OneToMany(mappedBy = "jobseekerCv",cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<WorkExperience> workExperiences;
 
-    @ManyToOne
-    @JoinColumn(name = "foreign_language_id", nullable = false)
-    private List<ForeignLanguage> foreignLanguageId;
-
-     */
+    @OneToMany(mappedBy = "jobseekerCv",cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<ForeignLanguage> foreignLanguages;
 
     @Column(name = "github_link")
     private String githubLink;
@@ -54,8 +50,9 @@ public class JobseekerCv {
     @Column(name = "programing_languages", length = 1000)
     private String programingLanguages;
 
-    @Lob
     @Column(name = "cover_letter")
+    @NotNull
+    @NotEmpty
     private String coverLetter;
 
 }

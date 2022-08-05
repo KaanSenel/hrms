@@ -1,4 +1,4 @@
-package com.hrms.mernis;
+package mernis;
 
 //----------------------------------------------------
 //

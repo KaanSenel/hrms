@@ -1,23 +1,17 @@
 package com.hrms.entities.concretes;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "job_seekers")
 @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
 public class JobSeeker extends User {
 
-   // @Column(name = "id")
-  //  private int id;
 
     @Column(name = "first_name",nullable = false)
     private String firstName;

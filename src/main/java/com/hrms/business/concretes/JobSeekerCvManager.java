@@ -9,7 +9,6 @@ import com.hrms.dataAccess.abstracts.JobseekerCvDao;
 import com.hrms.entities.concretes.JobseekerCv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -30,7 +29,23 @@ public class JobSeekerCvManager implements JobSeekerCvService {
     }
 
     @Override
-    public Result add(@RequestBody JobseekerCv jobseekerCv) {
+    public Result add(JobseekerCv jobseekerCv) {
+        if(jobseekerCv.getJobseekerUniversities()!=null) {
+            for (int i = 0; i < jobseekerCv.getJobseekerUniversities().size(); i++) {
+                if (jobseekerCv.getJobseekerUniversities().get(i).getEndYear() == null) {
+                    jobseekerCv.getJobseekerUniversities().get(i).
+                            setEndYear("Devam ediyor");
+                }
+            }
+        }
+        if(jobseekerCv.getWorkExperiences()!=null) {
+            for (int i = 0; i < jobseekerCv.getWorkExperiences().size(); i++) {
+                if (jobseekerCv.getWorkExperiences().get(i).getEndYear() == null) {
+                    jobseekerCv.getWorkExperiences().get(i).
+                            setEndYear("Devam ediyor.");
+                }
+            }
+        }
         this.jobseekerCvDao.save(jobseekerCv);
         return new SuccessResult("Cv Başarıyla kaydedildi.");
     }
