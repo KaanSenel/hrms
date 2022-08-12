@@ -18,13 +18,13 @@ import javax.persistence.*;
 public class JobseekerUniversity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "id", nullable = false)
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "jobseeker_cv_id",referencedColumnName = "id")
-    @JsonIgnore
+    @JsonBackReference
     private JobseekerCv jobseekerCv;
 
     @ManyToOne(fetch = FetchType.LAZY)

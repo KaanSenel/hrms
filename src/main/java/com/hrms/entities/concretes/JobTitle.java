@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,7 @@ public class JobTitle {
     private int id;
 
     @Column(name = "title")
+    @NotBlank
     private String title;
 
 }

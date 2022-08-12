@@ -1,6 +1,9 @@
 package com.hrms.entities.concretes;
 
-
+/*
+     ilk olaran nasıl kullanıcı eklediysen o mantıkla gidip deneyim dil okul falan ekle
+     cv 'ye eklerken de sadece id leri vericeksin öyle olur umarım artık aw
+ */
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,15 +33,15 @@ public class JobseekerCv {
     private JobSeeker jobseekerId;
 
     @OneToMany(mappedBy = "jobseekerCv",cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private List<JobseekerUniversity> jobseekerUniversities;
 
     @OneToMany(mappedBy = "jobseekerCv",cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private List<WorkExperience> workExperiences;
 
     @OneToMany(mappedBy = "jobseekerCv",cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private List<ForeignLanguage> foreignLanguages;
 
     @Column(name = "github_link")
@@ -53,6 +56,7 @@ public class JobseekerCv {
     @Column(name = "cover_letter")
     @NotNull
     @NotEmpty
+    @Lob
     private String coverLetter;
 
 }

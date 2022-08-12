@@ -2,12 +2,11 @@ package com.hrms.api.controllers;
 
 import com.hrms.business.abstracts.JobSeekerUniversityService;
 import com.hrms.core.results.DataResult;
+import com.hrms.core.results.Result;
 import com.hrms.entities.concretes.JobseekerUniversity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,8 +26,18 @@ public class JobSeekerUniversityController {
         return this.jobSeekerUniversityService.getAll();
     }
 
-    @GetMapping("getAllById")
-    public DataResult<List<JobseekerUniversity>> getAllById(@RequestParam int id){
+    @GetMapping("getByJobseekerCvId")
+    public DataResult<List<JobseekerUniversity>> getByJobseekerCvId(@RequestParam int id){
         return this.jobSeekerUniversityService.getByJobseekerCvId(id);
+    }
+
+    @GetMapping("getByJobseekerCvIdOrderByEndYearDesc")
+    public DataResult<List<JobseekerUniversity>> getByJobseekerCvIdOrderByEndYearDesc(@RequestParam int id){
+        return this.jobSeekerUniversityService.getByJobseekerCvIdOrderByEndYearDesc(id);
+    }
+
+    @PostMapping("add")
+    public ResponseEntity<?> add(@RequestBody JobseekerUniversity jobseekerUniversity){
+        return ResponseEntity.ok(this.jobSeekerUniversityService.add(jobseekerUniversity));
     }
 }

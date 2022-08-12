@@ -4,11 +4,10 @@ import com.hrms.business.abstracts.JobTitleService;
 import com.hrms.core.results.DataResult;
 import com.hrms.core.results.Result;
 import com.hrms.entities.concretes.JobTitle;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +26,8 @@ public class JobTitleController {
     }
 
     @PostMapping("/add")
-    public Result add(JobTitle jobTitle){
-        return this.jobTitleService.add(jobTitle);
+    public ResponseEntity<?> add(@Valid @RequestBody JobTitle jobTitle)
+    {
+        return ResponseEntity.ok(this.jobTitleService.add(jobTitle));
     }
 }
