@@ -1,16 +1,16 @@
 package com.hrms.entities.concretes;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "pictures")
 public class Picture {
     @Id
@@ -18,11 +18,11 @@ public class Picture {
     @Column(name = "id")
     private int id;
 
-    @NotBlank
     @Column(name = "url")
     private String url;
 
     @OneToOne
     @JoinColumn(name = "jobseeker_cv_id", referencedColumnName = "id")
+    @JsonIgnore
     private JobseekerCv jobseekerCv;
 }
